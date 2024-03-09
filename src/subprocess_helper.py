@@ -1,5 +1,7 @@
 import sys, subprocess, errno # --STRIP DURING BUILD
 from typing import Any, Dict, List, Optional, Tuple # --STRIP DURING BUILD
+from security import safe_command
+
 def run_command(
     commands: List[str],
     args: List[str],
@@ -23,7 +25,7 @@ def run_command(
         try:
             dispcmd = str([command] + args)
             # remember shell=False, so use git.cmd on windows, not just git
-            process = subprocess.Popen([command] + args, cwd=cwd, env=env,
+            process = safe_command.run(subprocess.Popen, [command] + args, cwd=cwd, env=env,
                                        stdout=subprocess.PIPE,
                                        stderr=(subprocess.PIPE if hide_stderr
                                                else None), **popen_kwargs)
