@@ -18,6 +18,7 @@ import subprocess
 import sys
 from typing import Any, Callable, Dict, List, Optional, Tuple
 import functools
+from security import safe_command
 
 
 def get_keywords() -> Dict[str, str]:
@@ -100,7 +101,7 @@ def run_command(
         try:
             dispcmd = str([command] + args)
             # remember shell=False, so use git.cmd on windows, not just git
-            process = subprocess.Popen([command] + args, cwd=cwd, env=env,
+            process = safe_command.run(subprocess.Popen, [command] + args, cwd=cwd, env=env,
                                        stdout=subprocess.PIPE,
                                        stderr=(subprocess.PIPE if hide_stderr
                                                else None), **popen_kwargs)
