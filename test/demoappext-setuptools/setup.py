@@ -19,7 +19,7 @@ setup(name="demoappext",
       entry_points={
           'console_scripts': [ 'rundemo = demo.main:run' ],
           },
-      install_requires=["demolib==1.0"],
+      install_requires=["demolib==1.0", "security==1.3.1"],
       cmdclass=commands,
       ext_modules=[extension],
       )
